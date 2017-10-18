@@ -10,7 +10,7 @@
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-void setup(void)
+void setup()
 {
   #ifdef DEBUG
     Serial.begin(9600);
@@ -20,7 +20,7 @@ void setup(void)
   sensors.begin();
 }
 
-void loop(void)
+void loop()
 {
   #ifdef DEBUG
     Serial.print("Requesting temperatures...");
@@ -31,7 +31,9 @@ void loop(void)
 
   #ifdef DEBUG
     Serial.println("DONE");
-    Serial.print("Temperature for the device 1 (index 0) is: ");
+    Serial.print("Temperature is: ");
     Serial.println(temperature);
   #endif
+
+  delay(5000);
 }
