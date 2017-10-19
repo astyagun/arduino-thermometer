@@ -2,8 +2,6 @@
 
 OneWire oneWire(ONE_WIRE_PIN);
 DallasTemperature sensors(&oneWire);
-unsigned long lastTemperatureRequestedAt;
-float currentTemperature = FLOAT_SMALLEST_NUMBER;
 
 void requestTemperature();
 float getTemperature();
@@ -15,19 +13,11 @@ void setupTemperatureSensor() {
   #endif
 
   sensors.begin();
-  requestTemperature();
 }
 
 float measureTemperature() {
-  unsigned long now     = millis();
-  unsigned long elapsed = now - lastTemperatureRequestedAt;
-
-  if (elapsed >= TEMPERATURE_REFRESH_DELAY) {
-    currentTemperature = getTemperature();
-    requestTemperature();
-  }
-
-  return currentTemperature;
+  requestTemperature();
+  return getTemperature();
 }
 
 void requestTemperature() {
@@ -36,7 +26,6 @@ void requestTemperature() {
   #endif
 
   sensors.requestTemperatures();
-  lastTemperatureRequestedAt = millis();
 }
 
 float getTemperature() {
