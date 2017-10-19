@@ -13,7 +13,8 @@ void lcdBacklightOff();
 void setupLcd() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   lcd.begin(16, 2);
-  lcd.print("Temperature:");
+  // Температура:
+  lcd.print("Te\xBC\xBE\x65pa\xBFypa:");
 
   pinMode(LCD_BACKLIGHT_PIN, OUTPUT);
   lcdBacklightOn();
