@@ -1,11 +1,11 @@
 #include "lcd.h"
 
-#define BUTTON_PIN A0
+#define BUTTON_PIN 3
 #define LCD_BACKLIGHT_PIN A2
 #define LCD_BACKLIGHT_OFF_INTERVAL 10000
 
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
-unsigned int lastBacklightOnTime;
+volatile unsigned int lastBacklightOnTime;
 
 void lcdBacklightOn();
 void lcdBacklightOff();
@@ -18,6 +18,7 @@ void setupLcd() {
 
   pinMode(LCD_BACKLIGHT_PIN, OUTPUT);
   lcdBacklightOn();
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), lcdBacklightOn, FALLING);
 }
 
 void printToLcd(float temperature) {
@@ -34,10 +35,7 @@ void printToLcd(float temperature) {
 }
 
 void lcdBacklightUpdate() {
-  if(digitalRead(BUTTON_PIN) == LOW)
-    lcdBacklightOn();
-  else
-    lcdBacklightOff();
+  lcdBacklightOff();
 }
 
 void lcdBacklightOn() {
