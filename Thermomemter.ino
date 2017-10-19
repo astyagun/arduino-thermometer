@@ -3,14 +3,12 @@
 #include "temperature_sensor.h"
 #include "lcd.h"
 
-void setup()
-{
+void setup() {
   setupTemperatureSensor();
   setupLcd();
 }
 
-void loop()
-{
+void loop() {
   printToLcd(measureTemperature());
   lcdBacklightUpdate();
 }
