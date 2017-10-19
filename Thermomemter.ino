@@ -7,6 +7,7 @@
 
 // Data wire is plugged into port 2 on the Arduino
 #define ONE_WIRE_BUS 2
+#define REFRESH_DELAY 5000
 
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
@@ -47,5 +48,5 @@ void loop()
     Serial.println(temperature);
   #endif
 
-  delay(5000);
+  delay(REFRESH_DELAY);
 }
