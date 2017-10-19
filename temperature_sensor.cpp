@@ -3,13 +3,14 @@
 OneWire oneWire(ONE_WIRE_PIN);
 DallasTemperature sensors(&oneWire);
 unsigned long lastTemperatureRequestedAt;
-float currentTemperature = 0;
+float currentTemperature = FLOAT_SMALLEST_NUMBER;
 
 void requestTemperature();
 float getTemperature();
 
 void setupTemperatureSensor() {
   #ifdef DEBUG
+    Serial.begin(9600);
     Serial.println("Dallas Temperature IC Control Library Demo");
   #endif
 

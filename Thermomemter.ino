@@ -2,8 +2,6 @@
 // TODO: Cache thermometer value to read it less often
 // TODO: Turn display on by button and turn it off after delay
 
-/* #define DEBUG */
-
 #define REFRESH_DELAY 5000
 
 #include "temperature_sensor.h"
@@ -11,9 +9,6 @@
 
 void setup()
 {
-  #ifdef DEBUG
-    Serial.begin(9600);
-  #endif
   setupTemperatureSensor();
   setupLcd();
 }

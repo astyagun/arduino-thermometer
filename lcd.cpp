@@ -16,10 +16,15 @@ void setupLcd() {
 
 void printToLcd(float temperature) {
   lcd.setCursor(0, 1);
-  lcd.print(temperature, 2);
-  lcd.print(" ");
-  lcd.print((char)0x99);
-  lcd.print("C");
+  if(temperature == FLOAT_SMALLEST_NUMBER) {
+    lcd.print("...");
+  } else {
+    lcd.print(temperature, 2);
+    lcd.print(" ");
+    lcd.print((char)0x99);
+    lcd.print("C");
+  }
+  lcd.print("               ");
 }
 
 void lcdBacklightUpdate() {
