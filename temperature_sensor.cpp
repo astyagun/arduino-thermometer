@@ -1,5 +1,8 @@
 #include "temperature_sensor.h"
 
+#define ONE_WIRE_PIN 2
+#define TEMPERATURE_REFRESH_DELAY 10000
+
 OneWire oneWire(ONE_WIRE_PIN);
 DallasTemperature sensors(&oneWire);
 unsigned long lastTemperatureRequestedAt;

@@ -1,5 +1,9 @@
 #include "lcd.h"
 
+#define BUTTON_PIN A0
+#define LCD_BACKLIGHT_PIN A2
+#define LCD_BACKLIGHT_OFF_INTERVAL 10000
+
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
 unsigned int lastBacklightOnTime;
 
