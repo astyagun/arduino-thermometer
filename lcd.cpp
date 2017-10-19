@@ -2,6 +2,9 @@
 
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
 
+void lcdBacklightOn();
+void lcdBacklightOff();
+
 void setupLcd() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   lcd.begin(16, 2);

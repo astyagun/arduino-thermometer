@@ -5,6 +5,7 @@
 #include <DallasTemperature.h>
 
 #define ONE_WIRE_PIN 2
+#define TEMPERATURE_REFRESH_DELAY 5000
 
 void setupTemperatureSensor();
 float measureTemperature();
