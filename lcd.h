@@ -8,5 +8,6 @@
 
 void setupLcd();
 void printToLcd(float);
+void lcdBacklightUpdate();
 void lcdBacklightOn();
 void lcdBacklightOff();
