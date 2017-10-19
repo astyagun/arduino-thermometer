@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define DEBUG
+/* #define DEBUG */
 
 // DS18B20+ sensor library: https://github.com/milesburton/Arduino-Temperature-Control-Library
 #include <OneWire.h>
