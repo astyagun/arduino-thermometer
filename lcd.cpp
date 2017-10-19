@@ -1,6 +1,7 @@
 #include "lcd.h"
 
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
+unsigned int lastBacklightOnTime;
 
 void lcdBacklightOn();
 void lcdBacklightOff();
@@ -35,9 +36,13 @@ void lcdBacklightUpdate() {
 }
 
 void lcdBacklightOn() {
+  lastBacklightOnTime = millis();
   digitalWrite(LCD_BACKLIGHT_PIN, HIGH);
 }
 
 void lcdBacklightOff() {
-  digitalWrite(LCD_BACKLIGHT_PIN, LOW);
+  unsigned int now = millis();
+  unsigned int elapsed = now - lastBacklightOnTime;
+
+  if(elapsed >= LCD_BACKLIGHT_OFF_INTERVAL) digitalWrite(LCD_BACKLIGHT_PIN, LOW);
 }

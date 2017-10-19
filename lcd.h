@@ -5,7 +5,7 @@
 
 #define BUTTON_PIN A0
 #define LCD_BACKLIGHT_PIN A2
-#define LCD_BACKLIGHT_OFF_INTERVAL 1
+#define LCD_BACKLIGHT_OFF_INTERVAL 10000
 
 void setupLcd();
 void printToLcd(float);
