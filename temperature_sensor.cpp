@@ -15,7 +15,7 @@ void setupTemperatureSensor() {
   #endif
 
   sensors.begin();
-  requestTemperature();
+  lastTemperatureRequestedAt = millis() - TEMPERATURE_REFRESH_DELAY;
 }
 
 float measureTemperature() {
@@ -23,8 +23,8 @@ float measureTemperature() {
   unsigned long elapsed = now - lastTemperatureRequestedAt;
 
   if (elapsed >= TEMPERATURE_REFRESH_DELAY) {
-    currentTemperature = getTemperature();
     requestTemperature();
+    currentTemperature = getTemperature();
   }
 
   return currentTemperature;
