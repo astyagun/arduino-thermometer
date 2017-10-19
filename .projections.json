@@ -1,0 +1,14 @@
+{
+  "*.h": {
+    "type": "header",
+    "alternate": [
+      "{}.cpp"
+    ]
+  },
+  "*.cpp": {
+    "type": "source",
+    "alternate": [
+      "{}.h"
+    ]
+  }
+}
