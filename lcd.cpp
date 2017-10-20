@@ -4,7 +4,7 @@
 #define LCD_BACKLIGHT_PIN A2
 #define LCD_BACKLIGHT_OFF_INTERVAL 10000
 
-LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
+LiquidCrystal lcd(9, 8, 7, 6, 5, 4);
 volatile unsigned int lastBacklightOnTime;
 
 void lcdBacklightOn();
