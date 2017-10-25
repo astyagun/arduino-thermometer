@@ -18,7 +18,7 @@ void setupLcd() {
 
   pinMode(LCD_BACKLIGHT_PIN, OUTPUT);
   lcdBacklightOn();
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), lcdBacklightOn, FALLING);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), lcdBacklightOn, LOW);
 }
 
 void printToLcd(float temperature) {
