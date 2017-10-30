@@ -7,6 +7,8 @@
 LiquidCrystal lcd(9, 8, 7, 6, 5, 4);
 volatile unsigned int lastBacklightOnTime;
 
+void printToLcd(float);
+void lcdBacklightUpdate();
 void lcdBacklightOn();
 void lcdBacklightOff();
 
@@ -19,6 +21,11 @@ void setupLcd() {
   pinMode(LCD_BACKLIGHT_PIN, OUTPUT);
   lcdBacklightOn();
   attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), lcdBacklightOn, LOW);
+}
+
+void updateLcd(float temperature) {
+  printToLcd(temperature);
+  lcdBacklightUpdate();
 }
 
 void printToLcd(float temperature) {

@@ -12,6 +12,5 @@ void setup() {
 }
 
 void loop() {
-  printToLcd(measureTemperature());
-  lcdBacklightUpdate();
+  updateLcd(measureTemperature());
 }

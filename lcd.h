@@ -4,5 +4,4 @@
 #include "common.h"
 
 void setupLcd();
-void printToLcd(float);
-void lcdBacklightUpdate();
+void updateLcd(float);
