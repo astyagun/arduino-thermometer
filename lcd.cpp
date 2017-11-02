@@ -30,7 +30,7 @@ void updateLcd(float temperature) {
 
 void printToLcd(float temperature) {
   lcd.setCursor(0, 1);
-  if(temperature == FLOAT_SMALLEST_NUMBER) {
+  if(temperature == TEMPERATURE_INVALID) {
     lcd.print("...");
   } else {
     lcd.print(temperature, 2);
