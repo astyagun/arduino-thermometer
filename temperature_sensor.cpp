@@ -23,9 +23,9 @@ void TemperatureSensor::setup() {
     #ifdef DEBUG_LOOP_LENGTH
       lastLoopAt = millis();
     #endif
+    lastTemperatureReadAt = millis() - 1;
   #endif
 
-  lastTemperatureReadAt = millis() - 1;
   request();
 }
 
@@ -37,7 +37,7 @@ float TemperatureSensor::measure() {
     if(!request()) currentTemperature = TEMPERATURE_INVALID;
   }
 
-  if(lastTemperatureReadAt < lastTemperatureRequestedAt) {
+  if(shouldRead) {
     now                 = millis();
     elapsedSinceRequest = now - lastTemperatureRequestedAt;
     if(elapsedSinceRequest > READ_DELAY && sensors.isConversionAvailable(sensorAddress))
@@ -64,6 +64,7 @@ bool TemperatureSensor::request() {
 
   if(sensors.requestTemperaturesByAddress(sensorAddress)) {
     lastTemperatureRequestedAt = millis();
+    shouldRead                 = true;
 
     #ifdef DEBUG
       Serial.print("Requested temperatures at ");
@@ -91,9 +92,10 @@ float TemperatureSensor::read() {
   float temperature = sensors.getTempC(sensorAddress);
 
   if(temperature != DEVICE_DISCONNECTED_C) {
-    lastTemperatureReadAt = millis();
+    shouldRead = false;
 
     #ifdef DEBUG
+      lastTemperatureReadAt = millis();
       Serial.print("Done reading at ");
       Serial.print(lastTemperatureReadAt, DEC);
       Serial.println();

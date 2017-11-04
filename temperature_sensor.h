@@ -12,21 +12,23 @@
 
 class TemperatureSensor {
   public:
-    void setup();
+    void  setup();
     float measure();
   private:
-    OneWire oneWire{ONE_WIRE_PIN};
+    OneWire           oneWire{ONE_WIRE_PIN};
     DallasTemperature sensors{&oneWire};
-    DeviceAddress sensorAddress;
-    unsigned long lastTemperatureRequestedAt;
-    unsigned long lastTemperatureReadAt;
-    float currentTemperature = TEMPERATURE_INVALID;
+    DeviceAddress     sensorAddress;
+    unsigned long     lastTemperatureRequestedAt;
+    bool              shouldRead         = false;
+    float             currentTemperature = TEMPERATURE_INVALID;
+
     #ifdef DEBUG
+      unsigned long lastTemperatureReadAt;
       #ifdef DEBUG_LOOP_LENGTH
         int lastLoopAt;
       #endif
     #endif
 
-    bool request();
+    bool  request();
     float read();
 };

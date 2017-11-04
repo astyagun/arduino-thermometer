@@ -10,8 +10,8 @@ class Lcd {
     void update(float);
   private:
     LiquidCrystal lcd{9, 8, 7, 6, 5, 4};
-    LcdBacklight lcd_backlight;
-    float lastTemperature = TEMPERATURE_INVALID;
+    LcdBacklight  lcd_backlight;
+    float         lastTemperature = TEMPERATURE_INVALID;
 
     bool shouldPrint(float);
     void print(float);
