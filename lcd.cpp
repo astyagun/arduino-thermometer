@@ -1,28 +1,21 @@
 #include "lcd.h"
 
-LiquidCrystal lcd(9, 8, 7, 6, 5, 4);
-float lastTemperature = TEMPERATURE_INVALID;
-LcdBacklight lcd_backlight;
-
-void printToLcd(float);
-bool shouldPrintToLcd(float);
-
-void setupLcd() {
+void Lcd::setup() {
   lcd.begin(16, 2);
   // Температура:
   lcd.print("Te\xBC\xBE\x65pa\xBFypa:");
 
   lcd_backlight.setup();
 
-  printToLcd(lastTemperature);
+  print(lastTemperature);
 }
 
-void updateLcd(float temperature) {
-  if(shouldPrintToLcd(temperature)) printToLcd(temperature);
+void Lcd::update(float temperature) {
+  if(shouldPrint(temperature)) print(temperature);
   lcd_backlight.update();
 }
 
-bool shouldPrintToLcd(float temperature) {
+bool Lcd::shouldPrint(float temperature) {
   if(lastTemperature != temperature) {
     lastTemperature = temperature;
     return true;
@@ -30,7 +23,7 @@ bool shouldPrintToLcd(float temperature) {
   return false;
 }
 
-void printToLcd(float temperature) {
+void Lcd::print(float temperature) {
   lcd.setCursor(0, 1);
   if(temperature == TEMPERATURE_INVALID) {
     lcd.print("...");

@@ -6,6 +6,7 @@ class LcdBacklight {
     unsigned int last_on_at;
     void setup();
     void update();
+  private:
     void on();
     void off();
 };
