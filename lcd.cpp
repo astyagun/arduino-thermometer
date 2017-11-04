@@ -1,12 +1,14 @@
 #include "lcd.h"
 
 #define BUTTON_PIN 3
+#define BUTTON_DEBOUNCE_INTERVAL 10
 #define LCD_BACKLIGHT_PIN A2
 #define LCD_BACKLIGHT_OFF_INTERVAL 10000
 
 LiquidCrystal lcd(9, 8, 7, 6, 5, 4);
-volatile unsigned int lastBacklightOnTime;
 float lastTemperature = TEMPERATURE_INVALID;
+Bounce debouncer = Bounce(); // Prevents triggering of LCD backlight by static electricity spikes
+volatile unsigned int lastBacklightOnTime;
 
 void printToLcd(float);
 bool shouldPrintToLcd(float);
@@ -20,9 +22,12 @@ void setupLcd() {
   // Температура:
   lcd.print("Te\xBC\xBE\x65pa\xBFypa:");
 
+  debouncer.attach(BUTTON_PIN);
+  debouncer.interval(BUTTON_DEBOUNCE_INTERVAL);
+
   pinMode(LCD_BACKLIGHT_PIN, OUTPUT);
   lcdBacklightOn();
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), lcdBacklightOn, LOW);
+
   printToLcd(lastTemperature);
 }
 
@@ -53,6 +58,8 @@ void printToLcd(float temperature) {
 }
 
 void lcdBacklightUpdate() {
+  debouncer.update();
+  if(debouncer.fell()) lcdBacklightOn();
   lcdBacklightOff();
 }
 

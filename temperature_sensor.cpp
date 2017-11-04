@@ -10,6 +10,11 @@ DeviceAddress sensorAddress;
 unsigned long lastTemperatureRequestedAt;
 unsigned long lastTemperatureReadAt;
 float currentTemperature = TEMPERATURE_INVALID;
+#ifdef DEBUG
+  #ifdef DEBUG_LOOP_LENGTH
+    int lastLoopAt;
+  #endif
+#endif
 
 bool requestTemperature();
 float getTemperature();
@@ -31,6 +36,9 @@ void setupTemperatureSensor() {
     else Serial.println("OFF");
     Serial.print("Sensor resolution: ");
     Serial.println(sensors.getResolution(sensorAddress), DEC);
+    #ifdef DEBUG_LOOP_LENGTH
+      lastLoopAt = millis();
+    #endif
   #endif
 
   lastTemperatureReadAt = millis() - 1;
@@ -51,6 +59,14 @@ float measureTemperature() {
     if(elapsedSinceRequest > TEMPERATURE_READ_DELAY && sensors.isConversionAvailable(sensorAddress))
       currentTemperature = getTemperature();
   }
+
+  #ifdef DEBUG
+    #ifdef DEBUG_LOOP_LENGTH
+      Serial.print("Length of loop: ");
+      Serial.println(millis() - lastLoopAt, DEC);
+      lastLoopAt = millis();
+    #endif
+  #endif
 
   return currentTemperature;
 }
