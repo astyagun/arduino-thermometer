@@ -1,25 +1,9 @@
 #include "temperature_sensor.h"
 
-#define ONE_WIRE_PIN 2
-#define TEMPERATURE_REQUEST_DELAY 10000
-#define TEMPERATURE_READ_DELAY 750
+#define REQUEST_DELAY 10000
+#define READ_DELAY 750
 
-OneWire oneWire(ONE_WIRE_PIN);
-DallasTemperature sensors(&oneWire);
-DeviceAddress sensorAddress;
-unsigned long lastTemperatureRequestedAt;
-unsigned long lastTemperatureReadAt;
-float currentTemperature = TEMPERATURE_INVALID;
-#ifdef DEBUG
-  #ifdef DEBUG_LOOP_LENGTH
-    int lastLoopAt;
-  #endif
-#endif
-
-bool requestTemperature();
-float getTemperature();
-
-void setupTemperatureSensor() {
+void TemperatureSensor::setup() {
   #ifdef DEBUG
     Serial.begin(9600);
     Serial.println("Dallas Temperature IC Control Library Demo");
@@ -42,22 +26,22 @@ void setupTemperatureSensor() {
   #endif
 
   lastTemperatureReadAt = millis() - 1;
-  requestTemperature();
+  request();
 }
 
-float measureTemperature() {
+float TemperatureSensor::measure() {
   unsigned long now                 = millis();
   unsigned long elapsedSinceRequest = now - lastTemperatureRequestedAt;
 
-  if(elapsedSinceRequest >= TEMPERATURE_REQUEST_DELAY) {
-    if(!requestTemperature()) currentTemperature = TEMPERATURE_INVALID;
+  if(elapsedSinceRequest >= REQUEST_DELAY) {
+    if(!request()) currentTemperature = TEMPERATURE_INVALID;
   }
 
   if(lastTemperatureReadAt < lastTemperatureRequestedAt) {
     now                 = millis();
     elapsedSinceRequest = now - lastTemperatureRequestedAt;
-    if(elapsedSinceRequest > TEMPERATURE_READ_DELAY && sensors.isConversionAvailable(sensorAddress))
-      currentTemperature = getTemperature();
+    if(elapsedSinceRequest > READ_DELAY && sensors.isConversionAvailable(sensorAddress))
+      currentTemperature = read();
   }
 
   #ifdef DEBUG
@@ -71,7 +55,7 @@ float measureTemperature() {
   return currentTemperature;
 }
 
-bool requestTemperature() {
+bool TemperatureSensor::request() {
   #ifdef DEBUG
     Serial.print("Requesting temperatures at ");
     Serial.print(millis(), DEC);
@@ -97,7 +81,7 @@ bool requestTemperature() {
   }
 }
 
-float getTemperature() {
+float TemperatureSensor::read() {
   #ifdef DEBUG
     Serial.print("Reading temperature at ");
     Serial.print(millis(), DEC);
