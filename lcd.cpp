@@ -11,11 +11,11 @@ void Lcd::setup() {
 }
 
 void Lcd::update(float temperature) {
-  if(shouldPrint(temperature)) print(temperature);
+  if(allowsPrint(temperature)) print(temperature);
   lcd_backlight.update();
 }
 
-bool Lcd::shouldPrint(float temperature) {
+bool Lcd::allowsPrint(float temperature) {
   if(lastTemperature != temperature) {
     lastTemperature = temperature;
     return true;

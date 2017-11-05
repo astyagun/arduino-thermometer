@@ -13,6 +13,6 @@ class Lcd {
     LcdBacklight  lcd_backlight;
     float         lastTemperature = TEMPERATURE_INVALID;
 
-    bool shouldPrint(float);
+    bool allowsPrint(float);
     void print(float);
 };

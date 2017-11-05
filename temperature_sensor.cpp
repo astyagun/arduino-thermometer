@@ -4,11 +4,6 @@
 #define READ_DELAY 750
 
 void TemperatureSensor::setup() {
-  #ifdef DEBUG
-    Serial.begin(9600);
-    Serial.println("Dallas Temperature IC Control Library Demo");
-  #endif
-
   sensors.begin();
   sensors.setWaitForConversion(false);
   sensors.getAddress(sensorAddress, 0);
@@ -20,9 +15,6 @@ void TemperatureSensor::setup() {
     else Serial.println("OFF");
     Serial.print("Sensor resolution: ");
     Serial.println(sensors.getResolution(sensorAddress), DEC);
-    #ifdef DEBUG_LOOP_LENGTH
-      lastLoopAt = millis();
-    #endif
     lastTemperatureReadAt = millis() - 1;
   #endif
 
@@ -37,20 +29,12 @@ float TemperatureSensor::measure() {
     if(!request()) currentTemperature = TEMPERATURE_INVALID;
   }
 
-  if(shouldRead) {
+  if(allowsRead) {
     now                 = millis();
     elapsedSinceRequest = now - lastTemperatureRequestedAt;
     if(elapsedSinceRequest > READ_DELAY && sensors.isConversionAvailable(sensorAddress))
       currentTemperature = read();
   }
-
-  #ifdef DEBUG
-    #ifdef DEBUG_LOOP_LENGTH
-      Serial.print("Length of loop: ");
-      Serial.println(millis() - lastLoopAt, DEC);
-      lastLoopAt = millis();
-    #endif
-  #endif
 
   return currentTemperature;
 }
@@ -64,7 +48,7 @@ bool TemperatureSensor::request() {
 
   if(sensors.requestTemperaturesByAddress(sensorAddress)) {
     lastTemperatureRequestedAt = millis();
-    shouldRead                 = true;
+    allowsRead                 = true;
 
     #ifdef DEBUG
       Serial.print("Requested temperatures at ");
@@ -92,7 +76,7 @@ float TemperatureSensor::read() {
   float temperature = sensors.getTempC(sensorAddress);
 
   if(temperature != DEVICE_DISCONNECTED_C) {
-    shouldRead = false;
+    allowsRead = false;
 
     #ifdef DEBUG
       lastTemperatureReadAt = millis();
