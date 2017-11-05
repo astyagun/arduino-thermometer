@@ -1,0 +1,6 @@
+#define TEMPERATURE_SENSOR_PIN 2
+
+#define LCD_PINS 9, 8, 7, 6, 5, 4
+
+#define LCD_BACKLIGHT_BUTTON_PIN 3
+#define LCD_BACKLIGHT_PIN A2

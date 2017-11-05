@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Bounce2.h>
+#include "common.h"
 
 class LcdBacklight {
   public:

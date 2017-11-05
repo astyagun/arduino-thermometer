@@ -9,7 +9,7 @@ class Lcd {
     void setup();
     void update(float);
   private:
-    LiquidCrystal lcd{9, 8, 7, 6, 5, 4};
+    LiquidCrystal lcd{LCD_PINS};
     LcdBacklight  lcd_backlight;
     float         lastTemperature = TEMPERATURE_INVALID;
 

@@ -8,14 +8,12 @@
 #include <DallasTemperature.h>
 #include "common.h"
 
-#define ONE_WIRE_PIN 2
-
 class TemperatureSensor {
   public:
     void  setup();
     float measure();
   private:
-    OneWire           oneWire{ONE_WIRE_PIN};
+    OneWire           oneWire{TEMPERATURE_SENSOR_PIN};
     DallasTemperature sensors{&oneWire};
     DeviceAddress     sensorAddress;
     unsigned long     lastTemperatureRequestedAt;
