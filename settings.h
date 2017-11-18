@@ -1,4 +1,4 @@
-#define TEMPERATURE_SENSOR_PIN 4
+#define TEMPERATURE_SENSOR_PIN 5
 
 #define LCD_PINS 7, 8, 9, 10, 11, 12
 
