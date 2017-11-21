@@ -1,9 +1,12 @@
 #include "lcd.h"
 
+// Температура
+#define TEMPERATURE_LABEL "Te\xBC\xBE\x65pa\xBFypa"
+
 void Lcd::setup() {
   lcd.begin(16, 2);
-  // Температура:
-  lcd.print("Te\xBC\xBE\x65pa\xBFypa:");
+  lcd.print(TEMPERATURE_LABEL);
+  lcd.print(":");
 
   lcd_backlight.setup();
 
