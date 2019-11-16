@@ -32,7 +32,7 @@ float TemperatureSensor::measure() {
   if(allowsRead) {
     now                 = millis();
     elapsedSinceRequest = now - lastTemperatureRequestedAt;
-    if(elapsedSinceRequest > READ_DELAY && sensors.isConversionAvailable(sensorAddress))
+    if(elapsedSinceRequest > READ_DELAY && sensors.isConversionComplete())
       currentTemperature = read();
   }
 
